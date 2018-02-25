@@ -4,10 +4,10 @@
 # Uses Alarm Sounds -> http://soundbible.com/tags-alarm.html
 #
 # File              : tomatopower.py
-# Author            : Sam Uel <samucaof42@gmail.com>
+# Author            : Sam Uel <samuelfreitas@linuxmail.org>
 # Date              : 26 dec 2017
-# Last Modified Date: 25 feb 2017
-# Last Modified By  : Sam Uel <samucaof42@gmail.com>
+# Last Modified Date: 24 feb 2018
+# Last Modified By  : Sam Uel <samuelfreitas@linuxmail.org>
 #
 # Abandon all hope, ye who enter here! - Dante Alighieri
 import time
@@ -17,12 +17,12 @@ from os import path, system
 from threading import Thread
 import vlc
 import menu
-from utils import ( icons,
-                    pomo_time_print,
+import fb
+from utils import ( welcome_msg,
                     break_time_print,
-                    restoreCursor,
-                    welcome_msg )
-from db import db, codedml, studydml, othertaskdml
+                    pomo_time_print,
+                    icons,
+                    restoreCursor )
 
 def chron():
     while True:
@@ -68,6 +68,7 @@ def time_is_up():
 
         break_time = '{:02d}:{:02d}'.format(minutes, seconds)
         break_time_print(break_time)
+
     alarm(f'{icons["alarm"]} Go back to work!')
     pause = True
 
@@ -77,12 +78,11 @@ def alarm(msg):
     player.play()
 
 def task_save():
-    if task['type'] == 1:
-        codedml.insert(user[0], task)
-    elif task['type'] == 2:
-        studydml.insert(user[0], task)
-    else:
-        othertaskdml.insert(user[0], task)
+    global user
+
+    # refresh user token
+    user = fb.fb_refresh_user_token(user['refreshToken'])
+    fb.fb_insert_task(user, task)
 
 def chron_state():
     if reset:
@@ -92,7 +92,7 @@ def chron_state():
 
     return icons['play'], 'play'
 
-def get_key():
+def key_pressed():
     tty.setcbreak(sys.stdin.fileno())
     key = sys.stdin.read(1)
     return key
@@ -101,7 +101,7 @@ def chron_control():
     global reset, pause
 
     while True:
-        key = get_key()
+        key = key_pressed()
 
         if key == 'q':
             sys.stdout.write(restoreCursor)
@@ -116,17 +116,16 @@ def chron_control():
             if pause: pause = not pause
 
 if __name__ == '__main__':
-    db.init_db()
     reset = False
     pause = True # chron starts paused
 
-    user, sound, task = menu.get_user(),\
+    user, sound, task = fb.fb_get_user(),\
                         menu.get_sound(),\
                         menu.get_task()
     case = task['pomotime'] * 60
     case_break = task['breaktime'] * 60
 
-    welcome_msg(user[1])
+    welcome_msg(user['email'])
 
     instance = vlc.Instance()
     player = instance.media_player_new()

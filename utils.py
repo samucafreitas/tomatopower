@@ -19,7 +19,7 @@ restoreCursor = '\033[?25h \033[K \033[F'
 carriageReturn = '\r'
 cls_term = '\033c'
 
-icons={'user':'', 'username':'', 'tomato':'', 'breaktime':'', 'alarm':'',\
+icons={'user':'', 'envelope':'', 'tomato':'', 'breaktime':'', 'alarm':'',\
        'sep1':'', 'sep2':'', 'reset':'', 'pause':'', 'play':'', 'warn':''}
 
 def separator(bar):
@@ -37,7 +37,7 @@ def separator(bar):
 def powerline(text, block_colors, block_icon):
     '''
         (bar: str) -> str
-        returns a separator.
+        returns a powerline.
     '''
     return separator('{fg}{bg} {icon} {text} {{fg}}{{bg}}{{icon}}{{resetAll}}'\
                      .format(fg=block_colors[0],
@@ -48,7 +48,7 @@ def powerline(text, block_colors, block_icon):
 def warning_msg(msg):
     '''
         (bar: str) -> str
-        returns a separator.
+        returns a warning message.
     '''
     print('{b}{iconwarn}{reset}{yf} {msg}{reset}'\
             .format(b=blink,
@@ -79,7 +79,7 @@ def welcome_msg(email):
     print(hideCursor, end='')
     print(powerline('User', (whitef, blackb), icons['user'])
           ((blackf, redb), icons['sep2'])
-          + powerline(email, (blackf, redb), icons['username'])
+          + powerline(email, (blackf, redb), icons['envelope'])
           ((redf, blackdb), icons['sep1']), flush=True)
 
 def pomo_time_print(pomo_time, chron_status, chron_icon):

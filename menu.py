@@ -1,8 +1,4 @@
-import sys
-from getpass import getpass
-from sqlite3 import IntegrityError
-from db import userdml
-from utils import warning_msg
+from utils import error_msg
 
 '''
     Here is the main menu showed when tomatopower.py starts.
@@ -10,13 +6,11 @@ from utils import warning_msg
     This is for learning purposes!
 '''
 
-def get_user():
-    print('***** Tomato Power *****')
-    user_name = input('User =<< ')
-    return userdml.select_user(user_name)
-
 def get_custom_time():
-    '''Returns a custom time for pomodoro.'''
+    '''
+        () -> int
+        Returns a custom time for pomodoro.
+    '''
     print('Pomodoro Time:'\
         + '\n 1) 25 minutes (recommended)'\
         + '\n 2) 30 minutes'\
@@ -29,12 +23,15 @@ def get_custom_time():
         elif opt == 2:
             return 30
         return int(input('N minutes =<< '))
-    except ValueError:
-        warning_msg('Please, insert an integer number!')
+    except ValueError as err:
+        error_msg('Please, insert an integer number!', err)
         return get_custom_time()
 
 def get_custom_break_time():
-    '''Returns a custom time for break.'''
+    '''
+        () -> int
+        Returns a custom time for break.
+    '''
     print('Break Time:'\
         + '\n 1) 5 minutes'\
         + '\n 2) 10 minutes'\
@@ -47,12 +44,15 @@ def get_custom_break_time():
         elif opt == 2:
             return 10
         return int(input('N minutes =<< '))
-    except ValueError:
-        warning_msg('Please, insert an integer number!')
+    except ValueError as err:
+        error_msg('Please, insert an integer number!', err)
         return get_custom_break_time()
 
 def get_sound():
-    '''Returns a sound for alarm.'''
+    '''
+        () -> str
+        Returns a sound name for alarm.
+    '''
     print('Select a Sound:'\
         + '\n 1) submarine.mp3'\
         + '\n 2) foghorn.mp3'\
@@ -60,8 +60,8 @@ def get_sound():
 
     try:
         opt = int(input('>>= '))
-    except ValueError:
-        warning_msg('Please, insert an integer number!')
+    except ValueError as err:
+        error_msg('Please, insert an integer number!', err)
         return get_sound()
 
     if opt == 1:
@@ -69,17 +69,21 @@ def get_sound():
     elif opt == 2:
         return 'foghorn.mp3'
 
-    return 'submarine.mp3'
+    return 'submarine.mp3' # Default
 
 def get_task():
-    '''Returns a dict.
-
-    Task keys:
-    type -- the task type: 1(coding), 2(Studying), 3(Other)
-    task -- the task: coding, studying, other_task
-    pomotime -- time for pomodoro
     '''
-    task = {'type': None, 'pomotime': None, 'breaktime': None}
+        () -> Dict
+
+        Task keys:
+        type -- the task type: 1(coding), 2(Studying), 3(Other)
+        task -- the task: coding, studying, other_task
+        pomotime -- time for pomodoro
+    '''
+    task = {'type':None,
+            'task':None,
+            'pomotime':None,
+            'breaktime':None}
 
     print('Select a Task Type:'\
         + '\n 1) Coding'\
@@ -88,8 +92,8 @@ def get_task():
 
     try:
         opt = int(input('>>= '))
-    except ValueError:
-        warning_msg('Please, insert an integer number!')
+    except ValueError as err:
+        error_msg('Please, insert an integer number!', err)
         return get_task()
 
     if opt == 1:
@@ -107,11 +111,12 @@ def get_task():
     return task
 
 def opt_coding():
-    '''Returns a dict.
+    '''
+        () -> dict
 
-    Coding keys:
-    lang -- programming language
-    desc -- description
+        coding keys:
+        lang -- programming language
+        desc -- description
     '''
     coding = {'lang':'', 'desc':''}
 
@@ -122,8 +127,8 @@ def opt_coding():
 
     try:
         main_language = int(input('>>= '))
-    except ValueError:
-        warning_msg('Please, insert an integer number!')
+    except ValueError as err:
+        error_msg('Please, insert an integer number!', err)
         return opt_coding()
 
     if main_language == 1:
@@ -141,11 +146,12 @@ def opt_coding():
     return coding
 
 def opt_studying():
-    '''Returns a dict.
+    '''
+        () -> dict
 
-    Studying keys:
-    subject -- main subject study
-    desc -- description
+        studying keys:
+        subject -- main subject study
+        desc -- description
     '''
     studying = {'subject':'', 'desc':''}
 
@@ -155,8 +161,8 @@ def opt_studying():
 
     try:
         main_subject = int(input('>>= '))
-    except ValueError:
-        warning_msg('Please, insert an integer number!')
+    except ValueError as err:
+        error_msg('Please, insert an integer number!', err)
         return opt_studying()
 
     if main_subject == 1:
@@ -172,11 +178,12 @@ def opt_studying():
     return studying
 
 def opt_other_task():
-    '''Returns a dict.
+    '''
+        () -> dict
 
-    Other task keys:
-    subject -- a subject for the task
-    desc -- description
+        other_task keys:
+        subject -- a subject for the task
+        desc -- description
     '''
     other_task = {'subject':'', 'desc':''}
     other_task['subject'] = input('Task subject: ').upper()
