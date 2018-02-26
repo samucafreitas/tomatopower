@@ -2,7 +2,7 @@ import sys
 from getpass import getpass
 from sqlite3 import IntegrityError
 from db import userdml
-from utils import warning_msg
+from utils import error_msg
 
 '''
     Here is the main menu showed when tomatopower.py starts.
@@ -29,8 +29,8 @@ def get_custom_time():
         elif opt == 2:
             return 30
         return int(input('N minutes =<< '))
-    except ValueError:
-        warning_msg('Please, insert an integer number!')
+    except ValueError as err:
+        error_msg('Please, insert an integer number!', err)
         return get_custom_time()
 
 def get_custom_break_time():
@@ -47,8 +47,8 @@ def get_custom_break_time():
         elif opt == 2:
             return 10
         return int(input('N minutes =<< '))
-    except ValueError:
-        warning_msg('Please, insert an integer number!')
+    except ValueError as err:
+        error_msg('Please, insert an integer number!', err)
         return get_custom_break_time()
 
 def get_sound():
@@ -60,8 +60,8 @@ def get_sound():
 
     try:
         opt = int(input('>>= '))
-    except ValueError:
-        warning_msg('Please, insert an integer number!')
+    except ValueError as err:
+        error_msg('Please, insert an integer number!', err)
         return get_sound()
 
     if opt == 1:
@@ -88,8 +88,8 @@ def get_task():
 
     try:
         opt = int(input('>>= '))
-    except ValueError:
-        warning_msg('Please, insert an integer number!')
+    except ValueError as err:
+        error_msg('Please, insert an integer number!', err)
         return get_task()
 
     if opt == 1:
@@ -122,8 +122,8 @@ def opt_coding():
 
     try:
         main_language = int(input('>>= '))
-    except ValueError:
-        warning_msg('Please, insert an integer number!')
+    except ValueError as err:
+        error_msg('Please, insert an integer number!', err)
         return opt_coding()
 
     if main_language == 1:
@@ -155,8 +155,8 @@ def opt_studying():
 
     try:
         main_subject = int(input('>>= '))
-    except ValueError:
-        warning_msg('Please, insert an integer number!')
+    except ValueError as err:
+        error_msg('Please, insert an integer number!', err)
         return opt_studying()
 
     if main_subject == 1:
