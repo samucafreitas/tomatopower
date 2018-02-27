@@ -24,7 +24,7 @@ def fb_get_user():
     print('     ***** Tomato Power *****'
         + '\n 1) Sign In'\
         + '\n 2) Sign Up'\
-        + '\n 3) Recover account'\
+        + '\n 3) Account Recovery'\
         + '\n n) Exit')
 
     try:
@@ -38,7 +38,7 @@ def fb_get_user():
     elif opt == 2:
         return fb_sign_up()
     elif opt == 3:
-        fb_recover_account()
+        fb_account_recovery()
         return fb_get_user()
     else:
         exit(0)
@@ -110,12 +110,12 @@ def fb_sign_up(num_attempts=0):
                     fb_insert_user(user['idToken'], data)
 
                     auth.send_email_verification(user['idToken'])
-                    warning_msg(f'We have sent an email to {email}\nYou need to verify your email to sign in.')
+                    warning_msg(f'We have sent an e-mail to {email}\nYou need to verify your e-mail to sign in.')
                     return fb_sign_in()
                 except HTTPError as err:
                     error_msg_json = json.loads(err.args[1])['error']['errors'][0]
                     if error_msg_json.get('message') == 'EMAIL_EXISTS':
-                        warning_msg('Email already exists! Try again.')
+                        warning_msg('E-mail already exists! Try again.')
                     else:
                         warning_msg('Operation error! Try again.')
             else:
@@ -126,9 +126,19 @@ def fb_sign_up(num_attempts=0):
     num_attempts += 1
     return fb_sign_up(num_attempts) 
 
-# TODO: recover account
-def fb_recover_account():
-    pass
+def fb_account_recovery():
+    email = check_email(input('E-mail: ').strip())
+
+    if email:
+        try:
+            auth.send_password_reset_email(email)
+            warning_msg(f'We have sent an e-mail to {email} to reset your password.')
+        except HTTPError as err:
+            error_msg_json = json.loads(err.args[1])['error']['errors'][0]
+            if error_msg_json.get('message') == 'EMAIL_NOT_FOUND':
+                warning_msg('E-mail not registered!')
+            else:
+                warning_msg('Operation error! Try again.')
 
 def fb_refresh_user_token(r_token):
     '''
