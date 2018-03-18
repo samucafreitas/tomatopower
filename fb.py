@@ -1,8 +1,8 @@
 from getpass import getpass
-from requests.exceptions import HTTPError
 import re
 import json
 import pyrebase
+from requests.exceptions import HTTPError
 from utils import warning_msg, error_msg
 
 fb = pyrebase.initialize_app({
@@ -32,7 +32,7 @@ def fb_get_user():
     except ValueError as err:
         error_msg('Please, insert an integer number!', err)
         return fb_get_user()
-    
+
     if opt == 1:
         return fb_sign_in()
     elif opt == 2:
@@ -122,9 +122,9 @@ def fb_sign_up(num_attempts=0):
                 warning_msg('Passwords are not the same! Try again.')
         else:
             warning_msg('Password should be at least 6 characters! Try again.')
-    
+
     num_attempts += 1
-    return fb_sign_up(num_attempts) 
+    return fb_sign_up(num_attempts)
 
 def fb_account_recovery():
     email = check_email(input('E-mail: ').strip())
