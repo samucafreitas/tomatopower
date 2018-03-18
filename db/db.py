@@ -7,7 +7,7 @@ DATABASE = path.join(BASE_DIR, 'tpdb.db')
 def init_db():
     conn = sqlite3.connect(DATABASE)
     cur = conn.cursor()
-    
+
     cur.execute('''PRAGMA foreign_keys = ON''')
 
     cur.execute('''CREATE TABLE IF NOT EXISTS languages(
@@ -24,7 +24,7 @@ def init_db():
 
     cur.execute('''CREATE TABLE IF NOT EXISTS users(
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        user_name VARCHAR(20) NOT NULL,
+                        user_name VARCHAR(20) NOT NULL UNIQUE,
                         dt_registration TIMESTAMP DEFAULT (DATETIME('now', 'localtime')))''')
 
     cur.execute('''CREATE TABLE IF NOT EXISTS codes(
