@@ -1,4 +1,4 @@
-# colors
+# Escape Sequences - Colors
 blackf = '\033[38;5;235m'
 blackb = '\033[48;5;235m'
 blackdb = '\033[49m'
@@ -9,7 +9,8 @@ redb = '\033[48;5;1m'
 whitef = '\033[39m'
 redf = '\033[31m'
 yellowf = '\033[33m'
-#----------------( ͡ᵔ ͜ʖ ͡ᵔ )-------------------
+
+# Escape Sequences - Control
 resetAllAttr = '\033[0m'
 bold = '\033[1m'
 blink = '\033[97;5m'
@@ -19,8 +20,8 @@ restoreCursor = '\033[?25h \033[K \033[F'
 carriageReturn = '\r'
 cls_term = '\033c'
 
-icons={'user':'', 'envelope':'', 'tomato':'', 'breaktime':'', 'alarm':'',\
-       'sep1':'', 'sep2':'', 'reset':'', 'pause':'', 'play':'', 'warn':''}
+icons = {'user':'', 'envelope':'', 'tomato':'', 'breaktime':'', 'alarm':'',\
+         'sep1':'', 'sep2':'', 'reset':'', 'pause':'', 'play':'', 'warn':''}
 
 def separator(bar):
     '''
