@@ -4,14 +4,9 @@ import json
 import pyrebase
 from requests.exceptions import HTTPError
 from utils import warning_msg, error_msg
+from fbconfig import config
 
-fb = pyrebase.initialize_app({
-    'apiKey': 'AIzaSyDeiUcMYMH7tjr8ZGwF6eOaVAIdvj8tcRA',
-    'authDomain': 'tomatopower-42.firebaseapp.com',
-    'databaseURL': 'https://tomatopower-42.firebaseio.com',
-    'projectId': 'tomatopower-42',
-    'storageBucket': 'tomatopower-42.appspot.com',
-    'messagingSenderId': '297540980261'})
+fb = pyrebase.initialize_app(config)
 
 auth = fb.auth()
 db = fb.database()
