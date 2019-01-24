@@ -4,10 +4,10 @@
 # Uses Alarm Sounds -> http://soundbible.com/tags-alarm.html
 #
 # File              : tomatopower.py
-# Author            : Sam Uel <samucaof42@gmail.com>
+# Author            : Sam Uel <samuelfreitas@linuxmail.org>
 # Date              : 26 dec 2017
 # Last Modified Date: 25 feb 2017
-# Last Modified By  : Sam Uel <samucaof42@gmail.com>
+# Last Modified By  : Sam Uel <samuelfreitas@linuxmail.org>
 #
 # Abandon all hope, ye who enter here! - Dante Alighieri
 import time
